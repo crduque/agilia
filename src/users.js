@@ -17,7 +17,7 @@ function Users() {
             }
         })
             .then(response => {
-                return response.json();
+                if (response.ok) return response.json();
             })
             .then(responseJson => {
                 setUsers([...users, ...responseJson.data]);
@@ -39,12 +39,12 @@ function Users() {
 
     let usersName = users.map((user, index) => {
         return (
-            <div className="card">
+            <div className="card" key={index}>
                 <img src={user.avatar} className="card-img-top" alt="..." />
                 <div className="card-body">
                     <p className="card-title">{user.first_name}</p>
                     <p className="card-text">{user.email}</p>
-                    <Link to="/edit">
+                    <Link to={"/edit/" + user.id}>
                         <button className="btn btn-outline-primary">Edit</button>
                     </Link>
                 </div>
@@ -56,7 +56,7 @@ function Users() {
         <div className="App">
             <header className="App-header">
                 <h1>Users list</h1>
-                {error ? error : ""}
+                {error ? <h2>{error}</h2> : ""}
                 {users ? usersName : ""}
             </header>
         </div>

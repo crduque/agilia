@@ -15,7 +15,7 @@ function App() {
           <Route exact path="/">
             <Users />
           </Route>
-          <Route exact path="/edit">
+          <Route exact path="/edit/:id">
             <EditUser />
           </Route>
         </Switch>

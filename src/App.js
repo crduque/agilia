@@ -1,55 +1,26 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
-import { useEffect, useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Users from './users';
+import EditUser from './editUser';
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const [error, setError] = useState("");
-  useEffect(()=>{
-    fetch("https://reqres.in/api/users", {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(response => {
-				return response.json();
-			})
-			.then(responseJson => {
-				setUsers(responseJson.data);
-			})
-			.catch(error => {
-				setError(error);
-			});
-	}, []);
-
-  let usersName = users.map((user, index) => {
-    return (
-      <li>{user.first_name}</li>
-    )
-  })
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <ul>
-          {users ? usersName : ""}
-        </ul>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Users />
+          </Route>
+          <Route exact path="/edit">
+            <EditUser />
+          </Route>
+        </Switch>
+      </Router>
+  )
 }
 
 export default App;
